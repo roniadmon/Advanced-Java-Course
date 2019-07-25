@@ -1,3 +1,5 @@
 func-j8/.idea/*
 func-j8/out
+on-unexpected/.idea/*
+on-unexpected/out
 *.iml
