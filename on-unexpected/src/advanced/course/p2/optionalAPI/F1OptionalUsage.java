@@ -1,4 +1,4 @@
-package advanced.course.p3.optionalAPI;
+package advanced.course.p2.optionalAPI;
 
 import java.util.Optional;
 
