@@ -7,6 +7,7 @@ public class F3Lambda {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
         Future<Integer> submit = executor.submit(() -> 42);
+        // and see bytecode
 
         System.out.println("The Meaning of all is... " + submit.get() + "!");
     }
