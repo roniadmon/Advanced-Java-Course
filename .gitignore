@@ -5,3 +5,4 @@ on-unexpected/out
 intro-to-lambda/.idea/*
 intro-to-lambda/out
 *.iml
+/.idea/*
