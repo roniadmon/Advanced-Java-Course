@@ -1,5 +1,6 @@
 package com.example.design.di;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,7 +10,7 @@ import java.time.ZonedDateTime;
 import java.util.stream.Stream;
 
 import static com.example.design.di.SalaryCalculator.BONUS;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SalaryCalculatorTest {
 
@@ -38,4 +39,11 @@ class SalaryCalculatorTest {
         return ZonedDateTime.of(2019, month, 1, 1, 1, 1, 1, ZoneId.of("UTC"));
     }
 
+    @Test
+    void test() {
+        assertAll(
+                () -> assertEquals(1, 1),
+                () -> assertTrue(true)
+        );
+    }
 }
