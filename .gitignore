@@ -6,3 +6,9 @@ intro-to-lambda/.idea/*
 intro-to-lambda/out
 *.iml
 /.idea/*
+/spring/2-profiles/.gradle/
+/spring/2-profiles/.idea/
+/spring/2-profiles/build/
+/spring/3-rest/.gradle/
+/spring/3-rest/.idea/
+/spring/3-rest/build/
