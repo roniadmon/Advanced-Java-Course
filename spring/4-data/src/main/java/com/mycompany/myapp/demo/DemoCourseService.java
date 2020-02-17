@@ -2,11 +2,8 @@ package com.mycompany.myapp.demo;
 
 import com.mycompany.myapp.domain.Course;
 import com.mycompany.myapp.service.CourseService;
-import com.mycompany.myapp.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,18 +15,16 @@ import java.util.stream.Stream;
 
 @SuppressWarnings("unused")
 @Service
-public class DemoService {
-    Logger log = LoggerFactory.getLogger(DemoService.class);
+public class DemoCourseService {
+    Logger log = LoggerFactory.getLogger(DemoCourseService.class);
 
     private final CourseService courseService;
-    private final StudentService studentService;
 
-    public DemoService(CourseService courseService, StudentService studentService) {
+    public DemoCourseService(CourseService courseService) {
         this.courseService = courseService;
-        this.studentService = studentService;
     }
 
-    @EventListener(ApplicationReadyEvent.class)
+    //@EventListener(ApplicationReadyEvent.class)
     public void demonstrate() {
         clean();
         log.info("Starting demo");
@@ -39,7 +34,6 @@ public class DemoService {
 
     private void clean() {
         courseService.findAll().forEach(course -> courseService.delete(course.getId()));
-        studentService.findAll().forEach(student -> studentService.delete(student.getId()));
     }
 
     private void demoCRUD() {
