@@ -12,3 +12,5 @@ intro-to-lambda/out
 /spring/3-rest/.gradle/
 /spring/3-rest/.idea/
 /spring/3-rest/build/
+/spring/4-data/.idea/
+/spring/4-data/build.gradle/
