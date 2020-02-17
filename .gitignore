@@ -14,3 +14,5 @@ intro-to-lambda/out
 /spring/3-rest/build/
 /spring/4-data/.idea/
 /spring/4-data/build/
+/spring/4-data/out/
+/spring/4-data/src/main/generated
