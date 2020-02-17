@@ -37,12 +37,14 @@ public class DemoService {
     }
 
     private void demoCRUD() {
-        Course myCourse = courseService.save(
-            new Course()
+        Course original = new Course()
                 .name("my course")
-                .length(10)
-        );
+                .length(10);
+        log.info("Original is: {}", original);
+
+        Course myCourse = courseService.save(original);
         log.info("Created is: {}", myCourse);
+        // are they the same?
 
         log.info("From DB is: {}", courseService.findOne(myCourse.getId()));
 
@@ -57,19 +59,19 @@ public class DemoService {
 
     private void demoPageable() {
         courseService.save(
-            new Course()
-                .name("my course1")
-                .length(10)
+                new Course()
+                        .name("my course1")
+                        .length(10)
         );
         courseService.save(
-            new Course()
-                .name("my course2")
-                .length(10)
+                new Course()
+                        .name("my course2")
+                        .length(10)
         );
         courseService.save(
-            new Course()
-                .name("my course3")
-                .length(10)
+                new Course()
+                        .name("my course3")
+                        .length(10)
         );
 
         log.info("All courses: {}", courseService.findAll(Pageable.unpaged()));
