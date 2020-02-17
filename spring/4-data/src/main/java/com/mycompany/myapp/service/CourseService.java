@@ -57,16 +57,25 @@ public class CourseService {
         courseRepository.deleteById(id);
     }
 
-    public Optional<Course> findOneWhereNameIs(String name) {
+    public Optional<Course> findOneWhereNameIsBySpecification(String name) {
         Specification<Course> spec = createSpecification(name);
         return courseRepository.findOne(spec);
     }
 
     private Specification<Course> createSpecification(String name) {
         return (root, query, criteriaBuilder) ->
-            criteriaBuilder.equal(
-                root.get(Course_.name),
-                name
-            );
+                criteriaBuilder.equal(
+                        root.get(Course_.name),
+                        name
+                );
     }
+
+    public Optional<Course> findOneWhereNameIsByQuery(String name) {
+        return courseRepository.findByQuery(name);
+    }
+
+    public Optional<Course> findOneWhereNameIsByMethod(String name) {
+        return courseRepository.findByName(name);
+    }
+
 }

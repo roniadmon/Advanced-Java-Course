@@ -11,6 +11,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Service
 public class DemoService {
     Logger log = LoggerFactory.getLogger(DemoService.class);
@@ -27,7 +32,7 @@ public class DemoService {
     public void demonstrate() {
         clean();
         log.info("Starting demo");
-        demoPageable();
+        demoCustomizations();
         System.exit(0);
     }
 
@@ -78,5 +83,26 @@ public class DemoService {
         // notice the hibernate queries (limit, offset)
         log.info("Page 1: {}", courseService.findAll(PageRequest.of(0, 1)));
         log.info("Page 2: {}", courseService.findAll(PageRequest.of(1, 1)));
+    }
+
+    private void demoCustomizations() {
+        String name = "my course";
+        courseService.save(
+                new Course()
+                        .name(name)
+                        .length(10)
+        );
+        courseService.save(
+                new Course()
+                        .name("other")
+                        .length(10)
+        );
+
+        Optional<Course> bySpec = courseService.findOneWhereNameIsBySpecification(name);
+        Optional<Course> byQuery = courseService.findOneWhereNameIsByQuery(name);
+        Optional<Course> byMethod = courseService.findOneWhereNameIsByMethod(name);
+
+        List<String> names = Stream.of(bySpec, byQuery, byMethod).map(Optional::get).map(Course::getName).collect(Collectors.toList());
+        log.info("Names are: {}", names);
     }
 }
