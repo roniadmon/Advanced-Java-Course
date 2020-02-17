@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@SuppressWarnings("unused")
 @Service
 public class DemoService {
     Logger log = LoggerFactory.getLogger(DemoService.class);
@@ -32,7 +33,7 @@ public class DemoService {
     public void demonstrate() {
         clean();
         log.info("Starting demo");
-        demoCustomizations();
+        demoConstraints();
         System.exit(0);
     }
 
@@ -104,5 +105,20 @@ public class DemoService {
 
         List<String> names = Stream.of(bySpec, byQuery, byMethod).map(Optional::get).map(Course::getName).collect(Collectors.toList());
         log.info("Names are: {}", names);
+    }
+
+    private void demoConstraints() {
+        try {
+            courseService.save(new Course());
+        } catch (Exception e) {
+            log.error("Exception 1", e);
+        }
+
+        try {
+            courseService.save(new Course().name("a"));
+        } catch (Exception e) {
+            log.error("Exception 2", e);
+        }
+        // notice - these exceptions happen before a request is sent to the db, other exceptions may arise after that
     }
 }
