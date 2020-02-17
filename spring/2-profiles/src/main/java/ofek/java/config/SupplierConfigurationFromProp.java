@@ -9,13 +9,19 @@ import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class SupplierConfigurationFromProp {
-    @Value("${printer-value:null}")
+    @Value("${application.printer-value:null}")
     private String printerValue;
 
     @Bean
     @Primary
-    @ConditionalOnProperty(value = "printer-value", havingValue = "C")
-    public StringSupplier getProp() {
+    @ConditionalOnProperty(value = "application.printer-value", havingValue = "C")
+    public StringSupplier getPropFromValue() {
         return () -> printerValue;
+    }
+
+    @Bean
+    @ConditionalOnProperty(value = "application.printer-value", havingValue = "C")
+    public StringSupplier getPropFromPOJO(ApplicationProperties applicationProperties) {
+        return applicationProperties::getPrinterValue;
     }
 }
