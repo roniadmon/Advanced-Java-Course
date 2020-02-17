@@ -30,7 +30,7 @@ public class DemoCourseService {
     public void demonstrate() {
         clean();
         log.info("Starting demo");
-        demoLaziness();
+        demoNoTransaction();
         System.exit(0);
     }
 
@@ -116,6 +116,15 @@ public class DemoCourseService {
             log.error("Exception 2", e);
         }
         // notice - these exceptions happen before a request is sent to the db, other exceptions may arise after that
+    }
+
+    //@Transactional
+    public void demoNoTransaction() {
+        demoLaziness();
+    }
+
+    private void demoTransaction() {
+        courseService.withTransaction(this::demoLaziness);
     }
 
     private void demoLaziness() {

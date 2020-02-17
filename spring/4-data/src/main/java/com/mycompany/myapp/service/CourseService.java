@@ -78,4 +78,8 @@ public class CourseService {
         return courseRepository.findByName(name);
     }
 
+    @Transactional
+    public void withTransaction(Runnable runnable) {
+        runnable.run();
+    }
 }
