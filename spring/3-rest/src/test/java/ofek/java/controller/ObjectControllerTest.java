@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith( SpringRunner.class )
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = {DemoApplication.class, RestTemplate.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ObjectControllerTest {
     @LocalServerPort
@@ -47,7 +47,9 @@ public class ObjectControllerTest {
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<Employee>>(){});
+                new ParameterizedTypeReference<List<Employee>>() {
+                }
+        );
         List<Employee> employees = response.getBody();
 
         assertThat(employees).isEqualTo(expected);

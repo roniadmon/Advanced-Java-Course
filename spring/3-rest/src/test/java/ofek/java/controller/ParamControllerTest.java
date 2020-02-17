@@ -44,18 +44,20 @@ public class ParamControllerTest {
     public void testHelloUserPathVariable() {
         String url = BASE_URL + "greeting/{name}";
 
-        String responseBody = restTemplate.exchange(url,
+        String responseBody = restTemplate.exchange(
+                url,
                 HttpMethod.GET,
                 null,
                 String.class,
                 "user"
-        ).getBody();
-        assertEquals(responseBody, "Hello with PathVariable: user");
+        )
+                .getBody();
+        assertEquals(responseBody, "Hello user!");
     }
 
     @Test
     public void testHelloUserRequestParam() {
-        String url = BASE_URL + "greetingParam";
+        String url = BASE_URL + "greetingWithParam";
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("name", "user");
@@ -66,12 +68,12 @@ public class ParamControllerTest {
                 String.class,
                 "user"
         ).getBody();
-        assertEquals(responseBody, "Hello with RequestParam: user");
+        assertEquals(responseBody, "Hello user!");
     }
 
     @Test
     public void testHelloUserWithRequestHeader() {
-        String url = BASE_URL + "greetingHeader";
+        String url = BASE_URL + "greetingWithHeader";
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("name", "user");
@@ -82,6 +84,6 @@ public class ParamControllerTest {
                 entity,
                 String.class
         ).getBody();
-        assertEquals(responseBody, "Hello with RequestHeader: user");
+        assertEquals(responseBody, "Hello user!");
     }
 }

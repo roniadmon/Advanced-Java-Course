@@ -12,16 +12,16 @@ public class ParamController {
 
     @GetMapping("/greeting/{name}")
     public String helloUserPathVariable(@PathVariable String name) {
-        return "Hello with PathVariable: " + name;
+        return "Hello " + name + "!";
     }
 
-    @GetMapping("/greetingParam")
+    @GetMapping("/greetingWithParam")
     public String helloUserRequestParam(@RequestParam String name) {
-        return "Hello with RequestParam: " + name;
+        return "Hello " + name + "!";
     }
 
-    @GetMapping("/greetingHeader")
+    @GetMapping("/greetingWithHeader")
     public String helloUserWithRequestHeader(@RequestHeader("name") String name) {
-        return "Hello with RequestHeader: " + name;
+        return "Hello " + name + "!";
     }
 }
