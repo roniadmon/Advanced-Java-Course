@@ -4,6 +4,8 @@ import com.mycompany.myapp.domain.Course;
 import com.mycompany.myapp.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,11 +26,11 @@ public class DemoCourseService {
         this.courseService = courseService;
     }
 
-    //@EventListener(ApplicationReadyEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
     public void demonstrate() {
         clean();
         log.info("Starting demo");
-        demoConstraints();
+        demoLaziness();
         System.exit(0);
     }
 
@@ -114,5 +116,13 @@ public class DemoCourseService {
             log.error("Exception 2", e);
         }
         // notice - these exceptions happen before a request is sent to the db, other exceptions may arise after that
+    }
+
+    private void demoLaziness() {
+        Long advJavaId = courseService.save(new Course().name("advJava").length(5)).getId();
+        Course advJava = courseService.findOne(advJavaId).get();
+
+        log.info("Course from db is: {}", advJava);
+        log.info("Students in course are: " + advJava.getStudents());
     }
 }
