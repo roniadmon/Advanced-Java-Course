@@ -74,7 +74,7 @@ public class DemoService {
 
         log.info("All courses: {}", courseService.findAll(Pageable.unpaged()));
         // notice the hibernate queries (limit, offset)
-        log.info("Page 0: {}", courseService.findAll(PageRequest.of(0, 1)));
-        log.info("Page 1: {}", courseService.findAll(PageRequest.of(1, 1)));
+        log.info("Page 1: {}", courseService.findAll(PageRequest.of(0, 1)));
+        log.info("Page 2: {}", courseService.findAll(PageRequest.of(1, 1)));
     }
 }
