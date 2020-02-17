@@ -30,12 +30,16 @@ public class DemoCourseService {
     public void demonstrate() {
         clean();
         log.info("Starting demo");
-        demoNoTransaction();
+        demoTransaction();
         System.exit(0);
     }
 
     private void clean() {
         courseService.findAll().forEach(course -> courseService.delete(course.getId()));
+    }
+
+    private Long createCourseWithName(String name) {
+        return courseService.save(new Course().name(name)).getId();
     }
 
     private void demoCRUD() {
@@ -60,21 +64,9 @@ public class DemoCourseService {
     }
 
     private void demoPageable() {
-        courseService.save(
-                new Course()
-                        .name("my course1")
-                        .length(10)
-        );
-        courseService.save(
-                new Course()
-                        .name("my course2")
-                        .length(10)
-        );
-        courseService.save(
-                new Course()
-                        .name("my course3")
-                        .length(10)
-        );
+        createCourseWithName("my course1");
+        createCourseWithName("my course2");
+        createCourseWithName("my course3");
 
         log.info("All courses: {}", courseService.findAll(Pageable.unpaged()));
         // notice the hibernate queries (limit, offset)
@@ -84,16 +76,8 @@ public class DemoCourseService {
 
     private void demoCustomizations() {
         String name = "my course";
-        courseService.save(
-                new Course()
-                        .name(name)
-                        .length(10)
-        );
-        courseService.save(
-                new Course()
-                        .name("other")
-                        .length(10)
-        );
+        createCourseWithName(name);
+        createCourseWithName("other");
 
         Optional<Course> bySpec = courseService.findOneWhereNameIsBySpecification(name);
         Optional<Course> byQuery = courseService.findOneWhereNameIsByQuery(name);
@@ -120,16 +104,16 @@ public class DemoCourseService {
 
     //@Transactional
     public void demoNoTransaction() {
-        demoLaziness();
+        lookAtCourse();
     }
 
     private void demoTransaction() {
-        courseService.withTransaction(this::demoLaziness);
+        courseService.withTransaction(this::lookAtCourse);
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    private void demoLaziness() {
-        Long advJavaId = courseService.save(new Course().name("advJava").length(5)).getId();
+    private void lookAtCourse() {
+        Long advJavaId = createCourseWithName("advJava");
         Course advJava = courseService.findOne(advJavaId).get();
 
         log.info("Course from db is: {}", advJava);
