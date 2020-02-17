@@ -1,22 +1,24 @@
 package ofek.java.components;
 
-import ofek.java.util.Printer;
+import ofek.java.util.StringSupplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
-@Component
+@Service
 public class ValueLogger {
     private static final Logger logger = LoggerFactory.getLogger(ValueLogger.class);
 
-    @Autowired
-    private Printer printer;
+    private final StringSupplier stringSupplier;
+
+    public ValueLogger(StringSupplier printer) {
+        this.stringSupplier = printer;
+    }
 
     @PostConstruct
     public void demo() {
-        logger.info("Printing string: '{}'", printer.getStr());
+        logger.info("Printing string: '{}'", stringSupplier.get());
     }
 }
