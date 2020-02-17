@@ -30,7 +30,7 @@ public class DemoCourseService {
     public void demonstrate() {
         clean();
         log.info("Starting demo");
-        modifyInsideTransaction();
+        demoCRUD();
         System.exit(0);
     }
 
