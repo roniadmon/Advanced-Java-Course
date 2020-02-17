@@ -127,6 +127,7 @@ public class DemoCourseService {
         courseService.withTransaction(this::demoLaziness);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     private void demoLaziness() {
         Long advJavaId = courseService.save(new Course().name("advJava").length(5)).getId();
         Course advJava = courseService.findOne(advJavaId).get();
