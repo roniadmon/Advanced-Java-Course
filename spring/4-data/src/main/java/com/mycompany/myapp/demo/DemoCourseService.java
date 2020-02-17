@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "OptionalGetWithoutIsPresent"})
 @Service
 public class DemoCourseService {
     Logger log = LoggerFactory.getLogger(DemoCourseService.class);
@@ -30,7 +30,7 @@ public class DemoCourseService {
     public void demonstrate() {
         clean();
         log.info("Starting demo");
-        demoCRUD();
+        modifyInsideTransaction();
         System.exit(0);
     }
 
@@ -111,12 +111,31 @@ public class DemoCourseService {
         courseService.withTransaction(this::lookAtCourse);
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     private void lookAtCourse() {
         Long advJavaId = createCourseWithName("advJava");
         Course advJava = courseService.findOne(advJavaId).get();
 
         log.info("Course from db is: {}", advJava);
         log.info("Students in course are: " + advJava.getStudents());
+    }
+
+    private void modifyOutOfTransaction() {
+        Course advJava = courseService.findOne(createCourseWithName("advJava")).get();
+        addLength(advJava);
+
+        log.info("Course from DB is {}", courseService.findOneWhereNameIsByMethod("advJava").get());
+    }
+
+    private void modifyInsideTransaction() {
+        courseService.withTransaction(() -> {
+            Course advJava = courseService.findOne(createCourseWithName("advJava")).get();
+            addLength(advJava);
+        });
+
+        log.info("Course from DB is {}", courseService.findOneWhereNameIsByMethod("advJava").get());
+    }
+
+    private void addLength(Course advJava) {
+        advJava.length(27);
     }
 }
