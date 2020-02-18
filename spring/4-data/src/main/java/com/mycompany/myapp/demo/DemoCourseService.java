@@ -42,6 +42,8 @@ public class DemoCourseService {
         return courseService.save(new Course().name(name)).getId();
     }
 
+    // Customizations
+
     private void demoCRUD() {
         Course original = new Course()
                 .name("my course")
@@ -101,6 +103,17 @@ public class DemoCourseService {
         }
         // notice - these exceptions happen before a request is sent to the db, other exceptions may arise after that
     }
+
+    // Transaction
+
+    // what is a transaction?
+    // when should you use it?
+
+    // @Transactional API in spring
+    //      annotation on method
+    //      exceptions
+    //      annotation on stack (@Transactional inside @Transactional)
+    //      @Transactional inside the same class
 
     //@Transactional
     public void demoNoTransaction() {
