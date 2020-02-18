@@ -113,6 +113,7 @@ public class DemoCourseService {
     //      annotation on method
     //      exceptions
     //      annotation on stack (@Transactional inside @Transactional)
+    //          readonly
     //      @Transactional inside the same class
 
     //@Transactional
